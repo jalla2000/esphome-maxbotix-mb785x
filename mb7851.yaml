@@ -1,0 +1,52 @@
+esphome:
+  name: esphome-web-3cc3ab
+  friendly_name: DI Chip 2
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "z8tBVH/5IP+dhzU24QyG9PNaeSMvUSEZ5ztLJIeEydM="
+
+ota:
+
+
+sensor:
+  - platform: pulse_meter
+    name: "Produksjon flow"
+    unit_of_measurement: 'm³/h'
+    filters:
+      - throttle_average: 4s
+      - timeout:
+          timeout: 5s
+          value: 0
+      - multiply: 0.06
+    pin:
+      number: D1
+      mode:
+        input: true
+        pullup: true
+    total:
+      name: "Produksjon akkumulert"
+      unit_of_measurement: "m³"
+      accuracy_decimals: 2
+      filters:
+        - multiply: 0.001
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esphome-Web-3Cc3Ab"
+    password: "mhY3zH1P6Zaa"
+
+captive_portal:
+    
